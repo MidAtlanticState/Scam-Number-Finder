@@ -13,11 +13,19 @@ Public Class Main
         driver.Url() = $"https://google.com/search?q={dorks.Text}"
         '$"https://duckduckgo.com/?q={dorks.Text}"
         '$"https://search.brave.com/search?q={dorks.Text}"
-        For Each WebElement In driver.FindElements(By.PartialLinkText("://"))
-            Try
-                WebElement.SendKeys(Keys.Control & Keys.Enter)
-            Catch : End Try
-        Next
+        Dim MaxPage As Integer
+        Try
+NextPage:   If driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Displayed And MaxPage < 3 Then
+                For Each WebElement In driver.FindElements(By.PartialLinkText("://"))
+                    Try
+                        WebElement.SendKeys(Keys.Control & Keys.Enter)
+                    Catch : End Try
+                Next
+                driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Click()
+                MaxPage = +1
+                GoTo NextPage
+            End If
+        Catch : End Try
         GetNumbers()
     End Sub
     Public Sub GetNumbers()
