@@ -18,8 +18,8 @@ NextPage:   If driver.FindElement(By.XPath(NextPageButton)).Displayed And MaxPag
                         WebElement.SendKeys(Keys.Control & Keys.Enter)
                     Catch : End Try
                 Next
-                driver.FindElement(By.XPath(NextPageButton)).Click()
-                MaxPage += 1
+                driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Click()
+                MaxPage = +1
                 GoTo NextPage
             End If
         Catch : End Try
