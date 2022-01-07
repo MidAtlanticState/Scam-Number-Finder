@@ -2,27 +2,24 @@
 Imports OpenQA.Selenium.Chrome
 Imports System.Text.RegularExpressions
 Public Class Main
-    Public Shared EXE = "C:\Program Files\Google\Chrome\Application\chrome.exe"
-    Shared ReadOnly UserData = $"{Application.StartupPath}\User Data\"
     Shared driver As IWebDriver
     Public Sub StartChrome() Handles Start.Click
-        Dim val As New ChromeOptions With {.BinaryLocation = EXE}
-        val.AddArgument("profile-directory=Default")
+        Dim val As New ChromeOptions With {.BinaryLocation = My.Settings.EXE}
         val.PageLoadStrategy = PageLoadStrategy.Eager
         driver = New ChromeDriver(val)
-        driver.Url() = $"https://google.com/search?q={dorks.Text}"
-        '$"https://duckduckgo.com/?q={dorks.Text}"
-        '$"https://search.brave.com/search?q={dorks.Text}"
+        driver.Manage.Timeouts().ImplicitWait = TimeSpan.FromSeconds(My.Settings.WaitTime)
+        driver.Url() = $"https://google.com/search?q={dorks.Text}" 'if you change this you have to change "NextPageButton"
+        Dim NextPageButton = "//*[@id=""pnnext""]/span[2]"
         Dim MaxPage As Integer
         Try
-NextPage:   If driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Displayed And MaxPage < 4 Then
+NextPage:   If driver.FindElement(By.XPath(NextPageButton)).Displayed And MaxPage < My.Settings.PageNumber Then
                 For Each WebElement In driver.FindElements(By.PartialLinkText("://"))
                     Try
                         WebElement.SendKeys(Keys.Control & Keys.Enter)
                     Catch : End Try
                 Next
-                driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Click()
-                MaxPage = +1
+                driver.FindElement(By.XPath(NextPageButton)).Click()
+                MaxPage += 1
                 GoTo NextPage
             End If
         Catch : End Try
@@ -45,5 +42,9 @@ NextPage:   If driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Displ
     End Sub
     Private Sub WhatIsAdork_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles WhatIsAdork.Opening
         Process.Start("https://en.wikipedia.org/wiki/Google_hacking")
+    End Sub
+
+    Private Sub SettingsButton_Click(sender As Object, e As EventArgs) Handles SettingsButton.Click
+        SettingsPage.Show()
     End Sub
 End Class
