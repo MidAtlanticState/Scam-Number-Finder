@@ -1,6 +1,7 @@
 ﻿Public Class SettingsPage
     Private Sub SaveSettings_Click(sender As Object, e As EventArgs) Handles SaveSettings.Click
         My.Settings.Save()
+        Me.Close()
     End Sub
 
     Private Sub PageWaitValue_ValueChanged(sender As Object, e As EventArgs) Handles PageWaitValue.ValueChanged
