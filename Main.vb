@@ -38,7 +38,7 @@ NextPage:   If driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Displ
                     NumbersandLinks.Text &= $"{Number} {driver.Url}{vbNewLine}"
                     My.Computer.Audio.Play($"{Application.StartupPath}\Bingo.wav")
                 End If
-            Next : Next : NumbersandLinks.Text &= $"Done{vbNewLine}"  'driver.Quit()
+            Next : Next : NumbersandLinks.Text &= $"Done{vbNewLine}"  driver.Quit()
     End Sub
     Private Sub WhatIsAdork_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles WhatIsAdork.Opening
         Process.Start("https://en.wikipedia.org/wiki/Google_hacking")
