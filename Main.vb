@@ -6,20 +6,20 @@ Public Class Main
     Public Sub StartChrome() Handles Start.Click
         Dim val As New ChromeOptions With {.BinaryLocation = My.Settings.EXE}
         val.PageLoadStrategy = PageLoadStrategy.Eager
+        val.AddExcludedArgument("enable-automation")
         driver = New ChromeDriver(val)
         driver.Manage.Timeouts().ImplicitWait = TimeSpan.FromSeconds(My.Settings.WaitTime)
-        driver.Url() = $"https://google.com/search?q={dorks.Text}" 'if you change this you have to change "NextPageButton"
-        Dim NextPageButton = "//*[@id=""pnnext""]/span[2]"
-        Dim MaxPage As Integer
+        driver.Url() = $"https://google.com/search?q={dorks.Text}"
+        Dim MaxPage As Integer = 1
         Try
-NextPage:   If driver.FindElement(By.XPath(NextPageButton)).Displayed And MaxPage < My.Settings.PageNumber Then
+NextPage:   If driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Displayed And MaxPage <= My.Settings.PageNumber Then
                 For Each WebElement In driver.FindElements(By.PartialLinkText("://"))
                     Try
                         WebElement.SendKeys(Keys.Control & Keys.Enter)
                     Catch : End Try
                 Next
-                driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Click()
                 MaxPage = +1
+                If driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Displayed And MaxPage <= My.Settings.PageNumber Then driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Click()
                 GoTo NextPage
             End If
         Catch : End Try
