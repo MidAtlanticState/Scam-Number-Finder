@@ -4,24 +4,22 @@ Imports System.Text.RegularExpressions
 Public Class Main
     Shared driver As IWebDriver
     Public Sub StartChrome() Handles Start.Click
+        Dim PagesToCheck As Integer = 1
         Dim val As New ChromeOptions With {.BinaryLocation = My.Settings.EXE}
         val.PageLoadStrategy = PageLoadStrategy.Eager
         driver = New ChromeDriver(val)
         driver.Manage.Timeouts().ImplicitWait = TimeSpan.FromSeconds(My.Settings.WaitTime)
         driver.Url() = $"https://google.com/search?q={dorks.Text}"
-        Dim MaxPage As Integer = 1
         Try
-NextPage:   For Each WebElement In driver.FindElements(By.PartialLinkText("://"))
+Restart:    For Each WebElement In driver.FindElements(By.PartialLinkText("://"))
                 Try
                     WebElement.SendKeys(Keys.Control & Keys.Enter)
                 Catch : End Try : Next
-            MaxPage = +1
-            If driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Displayed And MaxPage < My.Settings.PageNumber Then
-                driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Click()
-                GoTo NextPage
-            End If
+            PagesToCheck += 1
+            If PagesToCheck > My.Settings.MaxPageNumber Then GoTo GetNumbers
+            If driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Displayed Then driver.FindElement(By.XPath("//*[@id=""pnnext""]/span[2]")).Click() : GoTo Restart
         Catch : End Try
-        GetNumbers()
+GetNumbers: GetNumbers()
     End Sub
     Public Sub GetNumbers()
         Dim FindNumbers As New Regex("(?'first'\+?\d{1,3})?[- .(]?\d{3}[- .)]{0,2}\d{3}[\(\-\ \.]?\d{4}[- .)]?")

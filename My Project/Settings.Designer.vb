@@ -69,12 +69,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
-        Public Property PageNumber() As Integer
+        Public Property MaxPageNumber() As Integer
             Get
-                Return CType(Me("PageNumber"),Integer)
+                Return CType(Me("MaxPageNumber"),Integer)
             End Get
             Set
-                Me("PageNumber") = value
+                Me("MaxPageNumber") = value
             End Set
         End Property
         
