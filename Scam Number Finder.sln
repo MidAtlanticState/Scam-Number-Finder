@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Scam Number Finder", "Scam Number Finder.vbproj", "{C6950655-FE65-4ED6-B8D8-E1E78E9ED278}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Scam Number Finder Bot", "..\experiments\Scam Number Finder Bot\Scam Number Finder Bot.vbproj", "{2CC9B996-2358-48F3-8DE0-17A20DF6FE0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C6950655-FE65-4ED6-B8D8-E1E78E9ED278}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6950655-FE65-4ED6-B8D8-E1E78E9ED278}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6950655-FE65-4ED6-B8D8-E1E78E9ED278}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CC9B996-2358-48F3-8DE0-17A20DF6FE0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CC9B996-2358-48F3-8DE0-17A20DF6FE0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CC9B996-2358-48F3-8DE0-17A20DF6FE0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CC9B996-2358-48F3-8DE0-17A20DF6FE0F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
