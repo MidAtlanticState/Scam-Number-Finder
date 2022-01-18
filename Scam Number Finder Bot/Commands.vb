@@ -8,6 +8,16 @@ Module Commands
     Public Class Main
         Inherits ModuleBase(Of SocketCommandContext)
         Shared driver As IWebDriver
+        Shared NumbersandLinks As New NameValueCollection()
+
+        <Command("Link")>
+        Public Function Link(<Remainder> Query As String) As Task
+            Try
+                Return ReplyAsync(NumbersandLinks.Item(Query))
+            Catch ex As Exception
+                Return ReplyAsync(ex.Message)
+            End Try
+        End Function
 
         <Command("Find")>
         Public Function StartChrome(MaxPageNumber As Integer, <Remainder> Dork As String) As Task
@@ -31,7 +41,6 @@ GetNumbers: GetNumbers()
         End Function
 
         Public Sub GetNumbers()
-            Dim NumbersandLinks As New NameValueCollection()
             Dim FindNumbers As New Regex("(?'first'\+?\d{1,3})?[- .(]?\d{3}[- .)]{0,2}\d{3}[\(\-\ \.]?\d{4}[- .)]?")
             For Each openedtab In driver.WindowHandles
                 driver.SwitchTo().Window(openedtab)
@@ -41,7 +50,7 @@ GetNumbers: GetNumbers()
                 Catch : End Try
                 For Each Number In Matches
                     If driver.Url.Contains("https://www.google.com/search?q=") = False Then
-                        NumbersandLinks.Add($"{Number} {driver.Url}", Number)
+                        NumbersandLinks.Set($"{Number}", $"{driver.Url}")
                     End If
                 Next : Next : driver.Quit()
             Dim Msg As String = String.Empty
